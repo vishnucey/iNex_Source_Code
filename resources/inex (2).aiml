@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+<category>
+    <pattern>SAMPLES</pattern>
+    <template>
+    Sample
+    </template>
+</category>
+
+
+<category>
+    <pattern> SAMPLE </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> SAMPLES _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ SAMPLES _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ SAMPLE  </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ SAMPLE _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+<category>
+    <pattern> _ SAMPLE </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> SAMPLE _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ INFORMATION </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ INFORMATION _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> INFORMATION _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ INFO _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ INFO </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>SAMPLE</pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern>WHAT CAN YOU DO</pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>WHAT CAN YOU DO _</pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ WHAT CAN YOU DO _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ WHAT YOU CAN DO</pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ WHAT YOU CAN DO _ </pattern>
+    <template>
+<srai>SAMPLES</srai>
+    </template>
+</category>
+
+
+
+
+<category>
+    <pattern> MY LOCATION </pattern>
+    <template>
+Please type in your location
+    </template>
+</category>
+
+
+<category>
+    <pattern> _ LOSS RATIO _ MY LOCATION</pattern>
+    <template>
+<srai> MY LOCATION</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ LOSS RATIO _ MY REGION</pattern>
+    <template>
+<srai> MY LOCATION</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ LOSS RATIO _ MY STATE</pattern>
+    <template>
+<srai> MY LOCATION</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern> LOSS RATIO _ MY LOCATION</pattern>
+    <template>
+<srai> MY LOCATION</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> LOSS RATIO _ MY REGION</pattern>
+    <template>
+<srai> MY LOCATION</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> LOSS RATIO _ MY STATE</pattern>
+    <template>
+<srai> MY LOCATION</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern>WHAT LOSS RATIO</pattern>
+    <template>
+Loss ratio is the total amount of insurance claims paid out to policyholders plus any loss adjustment expenses (LAE) divided by total premium earned over the same period of time, as a percentage.
+Loss Ratio = (Total Incurred Amount /Earned Premium Amount) * 100
+    </template>
+</category>
+
+<category>
+    <pattern> _ WHATS LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern> WHATS LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> WHAT _ LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ WHAT _ LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+
+
+<category>
+    <pattern> DEFINE LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ DEFINE LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ DEFINE _ LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> HOW _  LOSS RATIO CALCULATED </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern> _ CALCULATE _ LOSS RATIO </pattern>
+    <template>
+<srai>WHAT LOSS RATIO</srai>
+    </template>
+</category>
+
+</aiml>

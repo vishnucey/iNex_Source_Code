@@ -1,0 +1,33 @@
+.ie .message-sent.message-last .message-text, .message-sent.message-with-tail .message-text {
+  margin-bottom: 40px;
+  margin-top: -20px;
+  border-bottom: 20px;
+  width: 100%;
+}
+
+.ie .message-received.message-last .message-text, .message-received.message-with-tail .message-text {
+  margin-bottom: 30px;
+  margin-top: -20px;
+  width: 100%;
+}
+
+.ie .message-avatar {
+  margin-bottom: 25px;
+}
+
+.message-name {
+  margin-bottom: 19px;
+}
+
+.messages-date {
+  visibility: hidden;
+}
+textarea::placeholder {
+  color:#ececec;
+  font-size: 14px;
+  font-family: 'EYInterstate';
+  font-weight: normal;
+}
+.fa.fa-microphone{
+  color: #737380 !important;
+}

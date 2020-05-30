@@ -1,0 +1,12 @@
+Flask>=1,<2
+requests>=2,<3
+WordToNum>=0,<1
+git+https://github.com/weddige/pyaiml3.git
+pymongo>=3,<4
+pyphonetics>=0,<1
+pandas>=0,<1
+nltk>=3,<4
+pyodbc>=4,<5
+openpyxl>=2,<3
+pyyaml>=3,<5
+python-aiml>=0,<1

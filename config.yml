@@ -1,0 +1,67 @@
+name: Config file for iNexChatbot
+description: A configuration file to specify the parameters to pass to the different modules in the iNexChatbot
+
+sqlquerygen:
+  uri: "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQs7QbAva0g1fxNcyR5pMBX8pOIMf4htjdUNapJdA==@inexbotcosmosdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+  db: "iNex_db"
+  DRIVER: 'ODBC Driver 17 for SQL Server'
+  #SERVER: '10.53.155.137'
+  #DATABASE: 'IC_DEV_REPORTING'
+  #UID: 'gw_dhic'
+  #PWD: 'gwdhic@123'
+  SERVER: 'idp-insurance-dbserver.database.windows.net'
+  DATABASE: 'IC_DEV_REPORTING'
+  UID: 'idpsqladmin'
+  PWD: 'Idp@SQL123'
+
+application:
+  SECRET_KEY: "kbjPO^kkjsda879sx9UJH(IS(A^&S5rASIushad"
+  mongodb: "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQs7QbAva0g1fxNcyR5pMBX8pOIMf4htjdUNapJdA==@inexbotcosmosdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+  sessionVariablesList: ['Intent','Account Date','Region','timeperiod','groupby','Line of Business','Agent','time_range','vizType','fileName','combined','Loss ratio','Renewal Policy Count','Coverage']
+  greetingaiml: 'resources/greetings.aiml'
+  inexaiml: 'resources/inex.aiml'
+  tabularLink: "https://localhost:9080/visualization/table"
+  vlink: "https://localhost:9080/visualization/"
+
+callendpoint:
+  baseurl: "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/f87bb239-0047-404f-9d1b-f2a1e20004df"
+  #baseurl: "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/bfe52214-fcaf-4182-9abc-6e336c387243"
+  #baseurl: "https://northcentralus.api.cognitive.microsoft.com/luis/v2.0/apps/c7b268e4-3bda-4c6c-9fc9-2c0866de177f"
+
+cosmosdb_connection:
+  uri: "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQs7QbAva0g1fxNcyR5pMBX8pOIMf4htjdUNapJdA==@inexbotcosmosdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+
+detarepo_spl:
+  uri: "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQs7QbAva0g1fxNcyR5pMBX8pOIMf4htjdUNapJdA==@inexbotcosmosdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+  db: "iNex_db"
+  DRIVER: 'SQL Server Native Client 11.0'
+  SERVER: 'idp-insurance-dbserver.database.windows.net'
+  DATABASE: 'IC_DEV_REPORTING'
+  UID: 'idpsqladmin'
+  PWD: 'Idp@SQL123'
+
+delete_vis_files:
+  list_of_files: '/home/pocuser/iNex_v7/static/'
+
+persistmetadata:
+  metadataloc: 'resources/IC AISmart MetadataModel_v7.xlsx'
+  uri: "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQs7QbAva0g1fxNcyR5pMBX8pOIMf4htjdUNapJdA==@inexbotcosmosdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+  db: "iNex_db"
+
+persistmetadata_vis:
+  metadataloc: 'resources/VisualizationMetadata.xlsx'
+  uri: "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQs7QbAva0g1fxNcyR5pMBX8pOIMf4htjdUNapJdA==@inexbotcosmosdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+  db: "iNex_db"
+
+speechservices:
+  speech_key: "11381bd8eeb946cfb90eb86d5933c9ad"
+  service_region: "northcentralus"
+
+vismodule:
+  uri : "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQs7QbAva0g1fxNcyR5pMBX8pOIMf4htjdUNapJdA==@inexbotcosmosdb.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+
+azure_tts:
+  subscription_key: '11381bd8eeb946cfb90eb86d5933c9ad'
+  fetch_token_url: 'https://northcentralus.api.cognitive.microsoft.com/sts/v1.0/issueToken'
+  base_url: 'https://northcentralus.tts.speech.microsoft.com/'
+  path: 'cognitiveservices/v1'

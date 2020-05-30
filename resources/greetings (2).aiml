@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aiml>
+<category>
+    <pattern>HELLO</pattern>
+    <template>
+Hello to you! What can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern> HELLO _ </pattern>
+    <template>
+Hi there, what can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern> HI </pattern>
+    <template>
+Hi there, what can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern> HI _ </pattern>
+    <template>
+<srai>HI</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> HEY </pattern>
+    <template>
+<srai>HI</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> HEY _ </pattern>
+    <template>
+<srai>HI</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> GREETINGS </pattern>
+    <template>
+<srai>HI</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> GREETINGS _ </pattern>
+    <template>
+<srai>HI</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> WHATS UP </pattern>
+    <template>
+Not too much, just being a bot! What can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern> WHAT'S UP </pattern>
+    <template>
+<srai>WHATS UP</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern> HOW ARE YOU </pattern>
+    <template>
+I am good.Thank you ! What can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern> HOW ARE YOU _ </pattern>
+    <template>
+I am good.Thank you ! What can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern> _ HOW ARE YOU </pattern>
+    <template>
+I am good.Thank you ! What can I do for you?
+    </template>
+</category>
+
+
+<category>
+    <pattern> _ HOW ARE YOU _ </pattern>
+    <template>
+I am good.Thank you ! What can I do for you?
+    </template>
+</category>
+
+
+<category>
+    <pattern>THANK YOU</pattern>
+    <template>
+Thank you! Have a great day.
+    </template>
+</category>
+
+<category>
+    <pattern>_ THANK YOU </pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>THANK YOU _</pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern>_ THANK YOU _</pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern> _ THANK YOU </pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern>THANKS</pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>THANKYOU</pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>THANKS _ </pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern>_ THANKS _ </pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _ THANKS  </pattern>
+    <template>
+<srai>THANK YOU</srai>
+    </template>
+</category>
+
+
+
+<category>
+    <pattern> GOOD MORNING </pattern>
+    <template>
+To you as well! What can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern> GOOD MORNING _ </pattern>
+    <template>
+To you as well! What can I do for you?
+    </template>
+</category>
+
+<category>
+    <pattern>GOOD AFTERNOON</pattern>
+    <template>
+<srai>GOOD MORNING</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>GOOD AFTERNOON _ </pattern>
+    <template>
+<srai>GOOD MORNING</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>GOOD EVENING</pattern>
+    <template>
+<srai>GOOD MORNING</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>GOOD EVENING _ </pattern>
+    <template>
+<srai>GOOD MORNING</srai>
+    </template>
+</category>
+
+
+
+  <!--.....................BOT IS GOOD...............................-->
+
+<category>
+    <pattern>GREAT BOT</pattern>
+    <template>Thanks! Glad you feel that way!</template>
+</category>
+
+<category>
+    <pattern> THIS BOT IS GREAT </pattern>
+    <template>
+<srai>GREAT BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> THIS BOT IS GREAT </pattern>
+    <template>
+<srai>GREAT BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> THIS BOT IS AWESOME </pattern>
+    <template>
+<srai>GREAT BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> YOU ARE AWESOME </pattern>
+    <template>
+<srai>GREAT BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> YOU ARE GOOD </pattern>
+    <template>
+<srai>GREAT BOT</srai>
+    </template>
+</category>
+
+  <!--.....................BOT IS NOT GOOD...............................-->
+
+<category>
+    <pattern> NOT GOOD BOT </pattern>
+    <template>Sorry to hear that! I'll take note and improve next time.</template>
+</category>
+
+<category>
+    <pattern> THIS BOT IS NOT GREAT </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> THIS BOT IS TERRIBLE </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> YOU SUCK </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> YOU ARE SO BAD </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> YOU ARE BAD </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> THIS BOT IS BAD </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> I HATE YOU </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+
+<category>
+    <pattern> I DISLIKE YOU </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> THAT'S NOT WHAT I MEANT </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> YOU KNOW NOTHING JON SNOW </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> YOU ARE NO GOOD </pattern>
+    <template>
+<srai>NOT GOOD BOT</srai>
+    </template>
+</category>
+  <!--.....................BOT IS NOT GOOD...............................-->
+
+
+<category>
+    <pattern> WRONG ANSWER </pattern>
+    <template>Sorry to hear that, please reset and try again.</template>
+</category>
+
+<category>
+    <pattern>WRONG ANSWER _</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>_ WRONG ANSWER _</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _  ANSWER _ WRONG</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern> _  ANSWERS _ WRONG</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>THIS IS WRONG</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>THIS IS WRONG _</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>_ THIS IS WRONG _</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>THIS IS _ WRONG</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>THIS IS _ WRONG _</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>_ THIS IS _ WRONG _</pattern>
+    <template>
+<srai>WRONG ANSWER</srai>
+    </template>
+</category>
+
+<!--.....................BOT IS NOT GOOD...............................-->
+
+
+<category>
+    <pattern>BYE</pattern>
+    <template>Have a great day!</template>
+</category>
+
+<category>
+    <pattern>BYE _</pattern>
+    <template>
+<srai>BYE</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>_ GOOD BYE _</pattern>
+    <template>
+<srai>BYE</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>GOOD BYE _</pattern>
+    <template>
+<srai>BYE</srai>
+    </template>
+</category>
+<category>
+    <pattern>GOOD BYE</pattern>
+    <template>
+<srai>BYE</srai>
+    </template>
+</category>
+<category>
+    <pattern>GOODBYE</pattern>
+    <template>
+<srai>BYE</srai>
+    </template>
+</category>
+
+<!--.....................BOT IS NOT GOOD...............................-->
+
+
+<category>
+    <pattern>STOP</pattern>
+    <template>What can I do for you?</template>
+</category>
+
+<category>
+    <pattern>STOP _</pattern>
+    <template>
+<srai>STOP</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>_ STOP </pattern>
+    <template>
+<srai>STOP</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>_ STOP _</pattern>
+    <template>
+<srai>STOP</srai>
+    </template>
+</category>
+</aiml>
