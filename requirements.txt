@@ -10,3 +10,4 @@ pyodbc>=4,<5
 openpyxl>=2,<3
 pyyaml>=3,<5
 python-aiml>=0,<1
+pyjwt==1.4.2

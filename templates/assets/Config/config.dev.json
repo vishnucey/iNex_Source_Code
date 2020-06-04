@@ -1,0 +1,11 @@
+{
+
+    "adalConfig": {
+        "clientId": "<client-id-here>",
+        "tenant": "<tenant-guid-here>",
+        "cacheLocation": "localStorage",
+        "endpoints": {
+            "api": "<client-id-here>"
+        }
+    }
+}
