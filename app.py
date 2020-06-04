@@ -18,6 +18,7 @@ from werkzeug.serving import run_simple
 from functions import sanitize_lowertext
 from os.path import dirname, join
 from SQL_DB import *
+import jwt
 
 
 current_dir = dirname(__file__)
@@ -141,10 +142,34 @@ def converse():
     session['LEVEL2'] = distinct_level('LEVEL2')
     session['LEVEL3'] = distinct_level('LEVEL3')
     print(session['LEVEL1'])
+	
+	jwt_token = request.headers.get('Authorization', None)
+
+    print(jwt_token)
+    print(type(jwt_token))
+    user_input_i = request.form['userInput']
+    print(user_input_i)
+
+    jwt_token_str = str(jwt_token)
+
+    if 'xxxxx' in user_input_i:
+        if jwt_token :
+            print("in if")
+            try:
+                payload = jwt.decode(jwt_token_str[7:],verify=False)
+                print(payload['given_name'])
+                user_name = str(payload['given_name'])
+            except (jwt.DecodeError, jwt.ExpiredSignatureError):
+                user_name = 'No user'
+                return jsonify({'message': 'Token is invalid'})
+    
+        response = {'message': 'Hi {}, my name is iNex, I am here to provide answers to your data analysis related questions. \
+        What would you like to find out today? If you need help ask for "Samples"'.format(user_name)}
+        return jsonify(response)
 
 
 
-    if (scenario is not None and level is not None and level >= 0):
+    elif (scenario is not None and level is not None and level >= 0):
 
 
         session['Intent'] = None
