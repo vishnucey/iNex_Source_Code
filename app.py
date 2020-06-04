@@ -142,9 +142,7 @@ def converse():
     session['LEVEL2'] = distinct_level('LEVEL2')
     session['LEVEL3'] = distinct_level('LEVEL3')
     print(session['LEVEL1'])
-	
 	jwt_token = request.headers.get('Authorization', None)
-
     print(jwt_token)
     print(type(jwt_token))
     user_input_i = request.form['userInput']
