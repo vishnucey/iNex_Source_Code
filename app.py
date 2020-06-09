@@ -410,7 +410,7 @@ def converse():
                     return jsonify(response)
                         #break
                     #unauth_fn(response)
-                    sys.exit()
+                    #sys.exit()
                 try:
                     print("*************Input dictionary to query generation module**********************")
                     if (session_n['Agent Portfolio']) != None:
