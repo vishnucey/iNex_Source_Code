@@ -20,21 +20,24 @@ from os.path import dirname, join
 from SQL_DB import *
 import jwt
 
+from authorization import authorization,authorization_role, unauth_fn
 
+agent_wf = []
 current_dir = dirname(__file__)
 congfig_file = join(current_dir, "./config.yml")
 loaded_parameters = yaml.safe_load(open(congfig_file,'rb'))
 SECRET_KEY = loaded_parameters['application']['SECRET_KEY']
 mongodb_link = loaded_parameters['application']['mongodb']
 sessionVariablesList = loaded_parameters['application']['sessionVariablesList']
+# global payload
 
+payload_global = "chakka"
+role_global ='ALL'
 app = Flask(__name__)
 #CORS(app)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.debug = True
 Bot1 = LossRatio()
-
-
 
 
 RESET_KEYWORDS = ['reset', 'restart', 'stop', 'quit', 'main menu']
@@ -58,19 +61,19 @@ def index_css_8(path):
     return send_from_directory('templates', path)
 
 
-@app.route('/visualization/barchart')
-def barVisualization():
-    return render_template('barchart.html', vi=visualizationCode(session.get('vizType'), session.get('fileName')))
+# @app.route('/visualization/barchart')
+# def barVisualization():
+#     return render_template('barchart.html', vi=visualizationCode(session.get('vizType'), session.get('fileName')))
 
 
-@app.route('/visualization/linechart')
-def lineVisualization():
-    return render_template('linechart.html', vi=visualizationCode(session.get('vizType'), session.get('fileName')))
+# @app.route('/visualization/linechart')
+# def lineVisualization():
+#     return render_template('linechart.html', vi=visualizationCode(session.get('vizType'), session.get('fileName')))
 
 
-@app.route('/visualization/table')
-def tableVisualization():
-    return render_template('table.html', vi=visualizationCode('table', session.get('fileName')))
+# @app.route('/visualization/table')
+# def tableVisualization():
+#     return render_template('table.html', vi=visualizationCode('table', session.get('fileName')))
 
 
 @app.route('/mobile')
@@ -90,9 +93,9 @@ def clear_session():
     return jsonify('Session cleared')
 
 
-@app.route('/invoke_stt')
-def background_process_test():
-    return jsonify(stt())
+# @app.route('/invoke_stt')
+# def background_process_test():
+#     return jsonify(stt())
 
 
 @app.route('/text-to-speech', methods=['POST'])
@@ -131,44 +134,17 @@ def converse():
     level = session.get('level')
     user_input_i = request.form['userInput']
     response = {}
-    print("User input is: {}".format(user_input_i))
-    print("Session Level is : {}".format(str(level)))
-    #Intent_AG = 'Agent Performance '
-    #user_input = Intent_AG+user_input_i
     user_input = user_input_i
-    print("User input is: {}".format(user_input))
-    session['User'] = 'C_LEVEL'
+    #session['User'] = 'Manager'
     session['LEVEL1'] = distinct_level('LEVEL1')
     session['LEVEL2'] = distinct_level('LEVEL2')
     session['LEVEL3'] = distinct_level('LEVEL3')
-    print(session['LEVEL1'])
-	jwt_token = request.headers.get('Authorization', None)
-    print(jwt_token)
-    print(type(jwt_token))
-    user_input_i = request.form['userInput']
+    jwt_token = request.headers.get('Authorization', None)
+    print("****USER INPUT********")
     print(user_input_i)
-
     jwt_token_str = str(jwt_token)
-
+    ## For initializing the user and authentication 
     if 'xxxxx' in user_input_i:
-        if jwt_token :
-            print("in if")
-            try:
-                payload = jwt.decode(jwt_token_str[7:],verify=False)
-                print(payload['given_name'])
-                user_name = str(payload['given_name'])
-            except (jwt.DecodeError, jwt.ExpiredSignatureError):
-                user_name = 'No user'
-                return jsonify({'message': 'Token is invalid'})
-    
-        response = {'message': 'Hi {}, my name is iNex, I am here to provide answers to your data analysis related questions. \
-        What would you like to find out today? If you need help ask for "Samples"'.format(user_name)}
-        return jsonify(response)
-
-
-
-    elif (scenario is not None and level is not None and level >= 0):
-
 
         session['Intent'] = None
         session['Account Date'] = None
@@ -184,27 +160,84 @@ def converse():
         session['Loss ratio'] = None
         session['Renewal Policy Count'] = None
         session['Coverage'] = None
+        session['Agent Portfolio'] = None
+       
 
-        if type(response) is int:
-            session.clear()
-            response = {
-                'message': 'Hi, my name is iNex, I am here to provide answers to your data analysis related questions. What would you like to find out today? If you need help ask for "Samples".',
-                'speechOutput': 'Hi, my name is iNex, I am here to provide answers to your data analysis related questions. What would you like to find out today? If you need help ask for "Samples".'
+        if jwt_token :
+            print("Token Received")
+            try:
+                global payload_global
+                global role_global
+                payload = jwt.decode(jwt_token_str[7:],verify=False)
+                payload_global = payload
+                # payload_n = payload
+                print(payload['given_name'])
+                user_name = str(payload['given_name'])   
+                access,role = authorization_role(payload)
+                print(access)
+                print(role)
+                role_global=role
+                session['User']=role_global
+                if access=='User is not authorized':
+                    response ={'message': 'You do not have access to the requested module'}
+                    return jsonify(response)
+                elif access=='User is authorized':
+                    response = {'message': 'Hi {}, my name is iNex, I am here to provide answers to your data analysis related questions. \
+                        What would you like to find out today? If you need help ask for "Solutions"'.format(user_name)}
+                    return jsonify(response)
 
-            }
 
-        if 'drawChart' not in response.keys():
-            response['drawChart'] = False
 
-        return jsonify(response)
+            except (jwt.DecodeError, jwt.ExpiredSignatureError):
+                user_name = 'No user'
+                return jsonify({'message': 'Token is invalid'})
+
+    # elif (scenario is not None and level is not None and level >= 0):
+
+
+    #     session['Intent'] = None
+    #     session['Account Date'] = None
+    #     session['Region'] = None
+    #     session['Agent'] = None
+    #     session['Line of Business'] = None
+    #     session['timeperiod'] = None
+    #     session['time_range'] = None
+    #     session['groupby'] = None
+    #     session['fileName'] = None
+    #     session['combined'] = None
+    #     session['vizType'] = None
+    #     session['Loss ratio'] = None
+    #     session['Renewal Policy Count'] = None
+    #     session['Coverage'] = None
+    #     session['Agent Portfolio'] = None
+
+    #     response = {'message': 'Hi {}, my name is iNex, I am here to provide answers to your data analysis related questions. \
+    #     What would you like to find out today? If you need help ask for "Samples"'.format(user_name)}
+    #     return jsonify(response)
+       
+        
+
+        # if type(response) is int:
+        #     session.clear()
+        #     response = {
+        #         'message': 'Hi, my name is iNex, I am here to provide answers to your data analysis related questions. What would you like to find out today? If you need help ask for "Samples".',
+        #         'speechOutput': 'Hi, my name is iNex, I am here to provide answers to your data analysis related questions. What would you like to find out today? If you need help ask for "Samples".'
+
+        #     }
+
+        # if 'drawChart' not in response.keys():
+        #     response['drawChart'] = False
+
+        # return jsonify(response)
 
     else:
-
         user_input_sl = sanitize_lowertext(str(user_input))
-
+        datalist = distinct_data('LEVEL2')
+        session['Agent Portfolio'] = None
+        
         if k.respond(user_input_sl):
 
-            if 'sample' in sanitize_lowertext(k.respond(user_input_sl)):
+            if 'dedeed' in sanitize_lowertext(k.respond(user_input_sl)):
                 response = {
                     'message': 'Please find below sample questions you may ask. Please choose any one from below options or type in your specific questions.',
                     'actions': [
@@ -223,7 +256,7 @@ def converse():
                 #lastMonth = int('07')
                 # defaultTimePeriodList.append(appdatetime.datetime.now().strftime('%Y') + lastMonth.strftime('%m'))
                 #defaultTimePeriodList.append('201907')
-                defaultTimePeriodList.append('202003')
+                defaultTimePeriodList.append('202005')
                 session['Account Date'] = defaultTimePeriodList
                 response = {'message': k.respond(user_input_sl),'speechOutput':k.respond(user_input_sl)}
                 
@@ -246,44 +279,80 @@ def converse():
             session['Loss ratio'] = None
             session['Renewal Policy Count'] = None
             session['Coverage'] = None
-            response = {
-                'message': 'Hi, my name is iNex, I am here to provide answers to your data analysis related questions. What would you like to find out today? If you need help ask for "Samples".',
-                'speechOutput': 'Hi, my name is iNex, I am here to provide answers to your data analysis related questions. What would you like to find out today? If you need help ask for "Samples".'
-            }
+            session['Agent Portfolio'] = None
+
+            
+            user_name = str(payload_global['given_name'])
+            
+            response = {'message': 'Hi {}, my name is iNex, I am here to provide answers to your data analysis related questions. \
+                         What would you like to find out today? If you need help ask for "Solutions"'.format(user_name)}
 
 
 
 #### Wire frame update portion start ####
 
-        elif ((session['User'] == 'C_LEVEL') and user_input=='KPI'):
+
+        elif ((session['User'] == role_global) and user_input=='Solutions'):
                 Query = "SELECT DISTINCT LEVEL1 FROM DBO.CONVERSATION WHERE USER_NAME ="+"'"+session['User']+"'"
                 Qlevel = 'LEVEL1' 
-                response = framing_buttons(Query, Qlevel)
+                response = framing_buttons(Query, Qlevel,'Agent')
                 return response
         elif (user_input in session['LEVEL1']):
+            if (user_input == 'Agent Performance'):
+                Query = "select  distinct top 5  AG.agnt_name from fact_prem_tran FP inner join DIM_AGENT AG on FP.agnt_id = AG.agnt_id where AG.AGNT_NAME <>' '"
+                Qlevel = 'agnt_name'
+                response = framing_buttons(Query, Qlevel,'Agent')
+                
+                return response
+            else:
                 Query = "SELECT DISTINCT LEVEL2 FROM DBO.CONVERSATION WHERE LEVEL1 ="+"'"+user_input+"'"
                 Qlevel = 'LEVEL2'
-                response = framing_buttons(Query, Qlevel)
-                return response
-        elif (user_input in session['LEVEL2']) :
-                Query = "SELECT DISTINCT LEVEL3 FROM DBO.CONVERSATION WHERE LEVEL2 ="+"'"+user_input+"'"
-                Qlevel = 'LEVEL3'
-                response = framing_buttons(Query, Qlevel)
+                response = framing_buttons(Query, Qlevel,'Agent')
                 return response
 
+                #Query = "SELECT DISTINCT LEVEL2 FROM DBO.CONVERSATION WHERE LEVEL1 ="+"'"+user_input+"'"
+                #Query = "select  distinct top 5  AG.agnt_name from fact_prem_tran FP inner join DIM_AGENT AG on FP.agnt_id = AG.agnt_id where AG.AGNT_NAME <>' '"
+                #Qlevel = 'agnt_name'
+                #response = framing_buttons(Query, Qlevel)
+                #return response
+        elif (user_input in datalist):
+           Query = "SELECT DISTINCT LEVEL3 FROM DBO.CONVERSATION WHERE LEVEL2 = 'list'" 
+           Qlevel = 'LEVEL3'
+           agent_name = user_input
+           agent_wf.append(agent_name)
+           print(session)
+           response = framing_buttons(Query, Qlevel,agent_name)
+           return response
+        
+        
+        elif (user_input in session['LEVEL2']) :
+
+                Query = "SELECT DISTINCT LEVEL3 FROM DBO.CONVERSATION WHERE LEVEL2 ="+"'"+user_input+"'"
+                Qlevel = 'LEVEL3'
+
+                response = framing_buttons(Query, Qlevel,'Agent')
+                return response
+        elif (user_input == 'Click') :
+            Query = "SELECT DISTINCT LEVEL4 FROM DBO.CONVERSATION WHERE LEVEL3 = 'Agent Portfolio'"
+            Qlevel = 'LEVEL4'
+            response = framing_buttons(Query, Qlevel,'Agent')
+            return response
+
         else : 
+            print ("********************************************************************************")
+            #print (session['Agent_wireframe'])
         #### Wire frame update portion end ####   
 
         ##elif not (k.respond(user_input)) and user_input_sl not in RESET_KEYWORDS: ## Commanted as a part of new wireframe logic
 
 
-            try:
-                data=sql_connection()
-                if data.__len__()!=0:
-                    user_input = phonetic(data, user_input)
-            except:
-                print("Exception in phonetic similarity module!!!")
-                traceback.print_exc()
+            #try:
+            #    data=sql_connection()
+            #    if data.__len__()!=0:
+            #        user_input = phonetic(data, user_input)
+            #except:
+            #    print("Exception in phonetic similarity module!!!")
+            #    traceback.print_exc()
 
             try:
                 print("------Invoking entity and intent recognition module----")
@@ -313,8 +382,6 @@ def converse():
 
                         if i is not 'timeperiod':
                             session[str(i)] = sessionDict.get(i)
-                print('############################## SESSION ###############################')
-                print(session)
                 session['combined']=sessionDict.get('combined')
                 session['groupby'] = sessionDict.get('groupby')
                 session['vizType'] = sessionDict.get('vizType')
@@ -330,31 +397,44 @@ def converse():
                     # defaultTimePeriodList.append(appdatetime.datetime.now().strftime('%Y') + lastMonth.strftime('%m'))
                     ##hardcoding July as default month
                     #defaultTimePeriodList.append("201907")
-                    defaultTimePeriodList.append("202003")
+                    defaultTimePeriodList.append("202005")
                     session['Account Date'] = defaultTimePeriodList
-                print('############################## SESSION _ 2 ###############################')
-                print(session)
                 for sessionVar in sessionVariablesList:
                     if str(session.get(sessionVar)) == 'None' or session.get(sessionVar) is None:
                         session[sessionVar] = None
-                print('############################## SESSION _ 3 ###############################')
-                print(session)
+                print("*************Input dictionary to query authorization module**********************")
+                #print(payload_global)
+                session_n,data_sec = authorization(payload_global,session)
+                if (data_sec=='False'):
+                    response ={'message': 'You do not have access to the requested module'}
+                    return jsonify(response)
+                        #break
+                    #unauth_fn(response)
+                    sys.exit()
                 try:
                     print("*************Input dictionary to query generation module**********************")
-                    print(session)
-                    sqlOutDF,cutsList = sql_gen(session)
+                    if (session_n['Agent Portfolio']) != None:
+                        #print(session)
+                        #print ("*******************************************************")
+                        #print (agent_wf)
+                        #print ("*******************************************************")
+                        agnt = agent_wf[-1]
+                        session_n['Agent'] = agnt
+                        print(session_n)
+                        sqlOutDF,cutsList = querytab(session_n)
+                        
+                    else:
+                        sqlOutDF,cutsList = sql_gen(session_n)
 
                 except:
                     print("Exception in SQL query execution module!!!!")
                     traceback.print_exc()
 
 
-                vizType,response,templateOutputDF = invokeD3(session, sqlOutDF, cutsList)
+                vizType,response,templateOutputDF = invokeD3(session_n, sqlOutDF, cutsList)
 
                 if 'error' not in response:
-                    session['vizType']=vizType
-                    print("###################################### RESPONSE ##########################")
-                    print(response)
+                    session_n['vizType']=vizType
                     tempmsg = response
                     if vizType=='text':
                         tempJSON =templateOutputDF.to_json(orient='records')
@@ -364,9 +444,9 @@ def converse():
 
                     elif vizType not in 'text' and vizType not in 'table':
                         fName = "visualization" + str(time.time()) + ".csv"
-                        session['fileName'] = fName
+                        session_n['fileName'] = fName
                         tempJSON =templateOutputDF.to_json(orient='records')
-                        templateOutputDF.to_csv(r'./static/' + session.get('fileName'), index=False)
+                        templateOutputDF.to_csv(r'./static/' + session_n.get('fileName'), index=False)
                         print(templateOutputDF.to_json(orient='records'))
 
                         vlink = vlink + vizType
@@ -383,9 +463,9 @@ def converse():
 
                     elif vizType=='table':
                         fName = "visualization" + str(time.time()) + ".csv"
-                        session['fileName'] = fName
+                        session_n['fileName'] = fName
                         tempJSON =templateOutputDF.to_json(orient='records')
-                        templateOutputDF.to_csv(r'./static/' + session.get('fileName'), index=False)
+                        templateOutputDF.to_csv(r'./static/' + session_n.get('fileName'), index=False)
                         print(templateOutputDF.to_json(orient='records'))
                         response = {
                            # 'message': 'Please click ' + '<a href ="' + tabularLink + '" target="_blank"> here</a>' + ' to view data for '+tempmsg+ ' in table format.',
@@ -405,17 +485,17 @@ def converse():
                         }
 
                 print("Visual Type :", vizType)
-                print(session)
+                print(session_n)
                 
                 print("session variables are  ")
-                print("file Name----->" + str(session.get('fileName')))
-                print("intent----->" + str(session.get('Intent')) + ", state---------->" + str(
-                    session.get('Region')))
-                print(" date---------" + str(session.get('Account Date')) + ", agent---------" + str(
-                    session.get('Agent')))
+                print("file Name----->" + str(session_n.get('fileName')))
+                print("intent----->" + str(session_n.get('Intent')) + ", state---------->" + str(
+                    session_n.get('Region')))
+                print(" date---------" + str(session_n.get('Account Date')) + ", agent---------" + str(
+                    session_n.get('Agent')))
                 print(" LOB---------" + str(
-                    session.get('Line of Business')) + ", groupBy----------" + str(session.get('groupby')))
-                print("timeRange----->" + str(session.get('timeRange')))
+                    session_n.get('Line of Business')) + ", groupBy----------" + str(session_n.get('groupby')))
+                print("timeRange----->" + str(session_n.get('timeRange')))
                 
 
 
@@ -449,8 +529,7 @@ def converse():
 
         return jsonify(response)
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run()
 
 

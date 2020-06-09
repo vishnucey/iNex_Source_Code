@@ -55,6 +55,8 @@ def luisEndpointCall(query):
     yearList=[]
     lossratioList=[]
     renewalpolicycountList=[]
+    agentportfolioList=[]
+    newbusinesscountList = []
 
 
     r = requests.get(baseUrl, headers=headers, params=params)
@@ -96,7 +98,11 @@ def luisEndpointCall(query):
             lossratioList.append(outJson['entities'][i]['entity'])
         if outJson['entities'][i]['type'] == 'Renewal Policy Count':
             renewalpolicycountList.append(outJson['entities'][i]['entity'])
-        
+        if outJson['entities'][i]['type'] == 'New Business Policy Count':
+            newbusinesscountList.append(outJson['entities'][i]['entity'])          
+        if outJson['entities'][i]['type'] == 'Agent Portfolio':
+            agentportfolioList.append(outJson['entities'][i]['entity'])
+            
         if outJson['entities'][i]['type'] == 'LOB':
             lobList.append(outJson['entities'][i]['entity'])
         
@@ -370,6 +376,16 @@ def luisEndpointCall(query):
         outDict['Renewal Policy Count']= renewalpolicycountList
     else:
         outDict['Renewal Policy Count'] = None
+
+    if newbusinesscountList.__len__()!=0:
+        outDict['New Business Policy Count']= newbusinesscountList
+    else:
+        outDict['Renewal Policy Count'] = None 
+ 
+    if agentportfolioList.__len__()!=0:
+        outDict['Agent Portfolio']= agentportfolioList
+    else:
+        outDict['Agent Portfolio'] = None
 
     if lobList.__len__()!=0:
         outDict['Line of Business'] = lobList

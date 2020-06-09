@@ -19,11 +19,36 @@ uri = "mongodb://inexbotcosmosdb:imiDU1weWpyt61akkwhmtzCVhNQcbO47KjU4MkDmRuZhFZQ
 client = pymongo.MongoClient(uri)
 inexDB = client.iNex_db
 
+
 def invokeD3(session,df,cutsList):
     global inexDB
 
     multipleValues=[]
     singleValue=[]
+    
+    kp_db_list =[]
+    kpi_list =[]
+    calentity=[]
+    mycol = inexDB["kpi_calculation"]
+    mydoc = mycol.find()
+    for y in mydoc:
+        kp = y["kpi"]
+        kp_db_list.append(kp)
+    #print(kp_db_list)
+    for item in kp_db_list:
+    
+        a = session.get(item)
+        #print(item)
+        #print(a)
+        kpi_list.append(a)
+    #print(kpi_list)
+    for item in kpi_list:
+        if item is not None:
+            calentity.append(item[0])
+    #print (calentity)
+    entkey = (list(session.keys())[list(session.values()).index(calentity)])
+    print (entkey)    
+    
     print('df---', df)
     if df is None:
         print('data frame none')
@@ -66,14 +91,14 @@ def invokeD3(session,df,cutsList):
                     message=message + session['timeperiod']
                 print(session)
 
-                if session.get('Renewal Policy Count')==['renewal policy count']:
-                    message =message+" "+'Renewal Policy Count'
-                elif session.get('Loss ratio')==['loss ratio']:
-                    message=message+" "+'Loss ratio'
+                #if session.get('Renewal Policy Count')==['renewal policy count']:
+                    #message =message+" "+'Renewal Policy Count'
+                #elif session.get('Loss ratio')==['loss ratio']:
+                    #message=message+" "+'Loss ratio'
 
                 #session['Intent'] = 'Renewal Policy Count'
 
-                #message=message+ " "+session['Intent']
+                message=message+ " "+entkey
                 print("length", len(df.axes[1]))
                 print("IN AXES = 1")
                 print (df)
@@ -215,6 +240,8 @@ def invokeD3(session,df,cutsList):
                                 s = s.join(session.get(str(item)))
                                 # s = s.replace(",", ",'")
                                 temp_string =  temp_string + s + " "
+                
+
                 intent=str(session.get('Intent'))
                 print ("the temp_string is ---",temp_string)
                 if(intent == 'Agent Performance'):
@@ -222,7 +249,12 @@ def invokeD3(session,df,cutsList):
                         intent = 'Renewal Policy Count '
                     elif(session.get('Loss ratio')==['loss ratio']):
                         intent = 'Loss ratio '
-                response = intent +temp_string
+                    elif(session.get('Agent Portfolio')==['agent portfolio']):
+                        intent = 'Agent Portfolio Analysis '                        
+                
+                #response = intent +temp_string
+                response = entkey +temp_string
+
                 print ("the response is ---",response)
             ##If row count of SQL output >2 and for single cut, generate respective visualization and tabular structure
             elif len(df.axes[0]) > 2:
@@ -310,13 +342,14 @@ def invokeD3(session,df,cutsList):
                             temp_string =  temp_string + s + " "        
                     intent=str(session.get('Intent'))
                     
-                    samplelist = [session.get("Loss ratio"),session.get("Renewal Policy Count")]
-                    calentity =[]
-                    for item in samplelist:
-                        if item is not None:
-                            calentity.append(item[0])
-                    print (calentity)
-                    entkey = (list(session.keys())[list(session.values()).index(calentity)]) 
+                    #samplelist = [session.get("Loss ratio"),session.get("Renewal Policy Count")]
+                    #calentity =[]
+                    #for item in samplelist:
+                        #if item is not None:
+                            #calentity.append(item[0])
+                    #print (calentity)
+                    
+                    #entkey = (list(session.keys())[list(session.values()).index(calentity)]) 
                     
                     dbContent = inexDB.visualizationMetadata_d.find({"entity": entkey,"attribute":attr})
 

@@ -42,13 +42,28 @@ def sql_gen(sessiondict):
 
     try:
 
-        samplelist = [sessiondict.get("Loss ratio"),sessiondict.get("Renewal Policy Count")]
-        calentity =[]
-        for item in samplelist:
+        kp_db_list =[]
+        kpi_list =[]
+        calentity=[]
+        mycol = db["kpi_calculation"]
+        mydoc = mycol.find()
+        for y in mydoc:
+            kp = y["kpi"]
+            kp_db_list.append(kp)
+        #print(kp_db_list)
+        for item in kp_db_list:
+        
+            a = sessiondict.get(item)
+            #print(item)
+            #print(a)
+            kpi_list.append(a)
+        #print(kpi_list)
+        for item in kpi_list:
             if item is not None:
                 calentity.append(item[0])
-        print (calentity)
+        #print (calentity)
         entkey = (list(sessiondict.keys())[list(sessiondict.values()).index(calentity)])
+        print (entkey)
     except Exception as e:
         print(e)        
     
@@ -174,6 +189,7 @@ def sql_gen(sessiondict):
                 columnNamelist.append(x["columnNamePhysical"])
         df_mapping = {'attribute': attributelist, 'entityId': entityIdlist, 'tableName':tableNamelist, 'fieldName':fieldNamelist, 'columnName':columnNamelist}
         df_mappinginfo = pd.DataFrame(data=df_mapping)
+        print(df_mappinginfo)
         
         
         # Read entityMaster Collection, get entityNamePhysical where entityId= intent_entity_id and save to entityNamePhysical to the variable select_table
@@ -210,6 +226,22 @@ def sql_gen(sessiondict):
                         join_key = y["joinKey"]
                         join_tableName = tableNameMapping[ID[key]]
                         Query = Query + " INNER JOIN " + join_tableName + " " + ID[key] + " ON " + join_key
+    except Exception as e:
+        print(e)
+
+    # Add extra join if required based on the data in metadata sheet,
+    try:
+        mycol = db["attributeMaster_d"]
+        for items in calentity:
+            myquery = {"$and": [{"attributeName": str(entkey)}, {"timePeriod": str(time_period)}]}
+            result = mycol.find( myquery )
+            for y in result:
+                pass
+        sec = y["extra_join"]
+        print (sec)
+        
+        Query = Query + sec
+        
     except Exception as e:
         print(e)
 
@@ -386,7 +418,11 @@ def sql_gen(sessiondict):
         connection_string ='DRIVER={'+DRIVER+'};SERVER='+SERVER+';DATABASE='+DATABASE+';UID='+UID+';PWD='+PWD
         cnxn = pyodbc.connect(connection_string)
         print("Query--", Query)
+        
         df = pd.read_sql(Query, cnxn)
+        print (df)
+        print('@@@@@@@@@@@@@@@@@@@@@@@@###############')
+        #print (df.keys())
 
         try:
             renamedict ={}
@@ -394,16 +430,21 @@ def sql_gen(sessiondict):
 
                 for x in db.attributeMaster_d.find({"alias": key}):
                     renamedict[key] =x['attributeName']
+                    #print (renamedict[key])
                 tempdf =df_mappinginfo.loc[df_mappinginfo['fieldName'] == key]
+                #print (tempdf)
 
                 if tempdf.empty == False:
                     renamedict[key] = str(tempdf["attribute"].values[0])
-
+                print (renamedict[key])
+                print('&&&&&&&&&&&&&&&&1')
 
             for key in df.keys():
                 df = df.rename(columns={key: renamedict[key]})
             if 'Loss ratio' in df.columns:
                 df = df.rename(columns = {"Loss ratio" : "Loss ratio(%)"})
+            print (df)
+            print('&&&&&&&&&&&&&&&&')
         except Exception as e:
             df = None        
         
@@ -414,7 +455,7 @@ def sql_gen(sessiondict):
     return df,list_where_groupby
     
 #def main():
-#    a,b = sql_gen({'_permanent': True, 'Intent': 'Agent Performance', 'Renewal Policy Count': ['renewal policy count'], 'groupby': ['Coverage'], 'combined': None, 'vizType': None, 'fileName': None, 'timeperiod': 'MTD', 'Account Date': ['202004'], 'Region': None, 'Line of Business': None, 'Agent': None, 'time_range': None, 'Loss ratio': None, 'Coverage': None})
+#    a,b = sql_gen({'_permanent': True, 'Intent': 'Agent Performance', 'Renewal Policy Count': None, 'groupby': None, 'combined': None, 'vizType': None, 'fileName': None, 'timeperiod': 'MTD', 'Account Date': ['202005'], 'Region': None, 'Line of Business': None, 'Agent': ['ALL'], 'time_range': None, 'New Business Policy Count': ['Hel'], 'Coverage': None})
 #    print(a,b)
 #
 #if __name__=="__main__":
