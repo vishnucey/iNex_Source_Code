@@ -121,6 +121,6 @@ scandir==1.10.0
 SecretStorage==2.3.1
 six==1.14.0
 typing==3.7.4.1
-urllib3==1.25.8
+urllib3==1.26.5
 Werkzeug==1.0.1
 WordToNum==0.0.4
